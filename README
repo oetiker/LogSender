@@ -1,10 +1,11 @@
-LogFetcher
-==========
+LogSender
+=========
 Version: #VERSION#
 Date: #DATE#
 
-Use SSH to fetch log files from a configurable list of machines and store them locally
-takeing into account that the logfiles on the remote hosts are rotated
+Send files from a set of local directories to one or several remote machines
+via ftp and take care to only send them once.
+
 
 Enjoy!
 
