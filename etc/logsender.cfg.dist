@@ -1,0 +1,25 @@
+{
+	"GENERAL": {
+		"logFile": "/tmp/logsender.log",
+		"logLevel": "debug",
+		"logCheckInterval": 3600,
+		"logCheckPastIntervals": 10,
+		"timeout": 10
+	},
+	"CONSTANTS": {
+		"YM_DIR": "%Y"
+	},
+	"HOSTS": [
+		{
+			"url": "ftp://oetiker:gugus@engelberg",
+            "transferSuffix": ".engelberg",
+			"FILES": [
+				{
+                    "destinationDir": "demodir/",
+					"globPattern": "/home/oetiker/scratch/log/${YM_DIR}/message*",
+					"stopFile": "message.2"
+				}
+			]
+		}
+	]
+}
