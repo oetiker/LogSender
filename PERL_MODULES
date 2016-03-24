@@ -1,3 +1,6 @@
 Mojolicious
 Net::FTP
 Data::Processor
+IO::Uncompress::Gunzip
+File::Temp
+Test::Mock::Net::FTP

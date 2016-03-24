@@ -2,8 +2,12 @@
     "GENERAL": {
         "logFile": "/tmp/logsender.log",
         "logLevel": "debug",
+        // how often to check for new files
         "logCheckInterval": 3600,
+        // how many intervals into the past should we look
+        // when evaluating the strftime formated globPattern
         "logCheckPastIntervals": 10,
+        // how long to wait for the ftp server to respond
         "timeout": 10
     },
     "CONSTANTS": {
@@ -12,7 +16,11 @@
     "HOSTS": [
         {
             "url": "ftp://oetiker:gugus@engelberg",
+            // touch a file with this suffix next to each successfully
+            // transfered file
             "transferSuffix": ".engelberg",
+            // gunzip files prior to transfer
+            "gunzip": "yes",
             "FILES": [
                 {
                     "destinationDir": "demodir/",

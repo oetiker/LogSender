@@ -2,21 +2,19 @@ package LogSender::Command::send;
 use Mojo::Base 'Mojolicious::Command';
 use Getopt::Long 2.25 qw(:config posix_default no_ignore_case);
 #use Test::Mock::Net::FTP;
-#Test::Mock::Net::FTP::mock_prepare(
-#    engelberg => {
-#        oetiker => {
-#            password => 'gugus',
-#            dir => [ "/home/oetiker/scratch/log/remote_ftp/", "/" ]
-#        },
-#    },
-#);
+#Test::Mock::Net::FTP::mock_prepare(engelberg => {oetiker => {password => 'gugus',dir => [ "/home/oetiker/scratch/log/remote_ftp/", "/" ]},},);
+#my $FTP = 'Test::Mock::Net::FTP';
 use Net::FTP;
+my $FTP = 'Net::FTP';
+
 use Mojo::URL;
 use Mojo::Util qw(dumper);
 use File::Basename;
 use Time::HiRes qw(gettimeofday);
 use POSIX qw(strftime);
 use File::Spec;
+use IO::Uncompress::Gunzip qw(gunzip $GunzipError);
+use File::Temp qw/tempfile/;
 
 =head1 NAME
 
@@ -86,7 +84,7 @@ sub action {
         my $suffix = $host->{transferSuffix};
         my $url = Mojo::URL->new($host->{url});
         $self->log->debug("Connect to $host->{url}");
-        my $ftp = Net::FTP->new($url->host,Port=>$url->port||21,Passive=>1) or do {
+        my $ftp = $FTP->new($url->host,Port=>$url->port||21,Passive=>1) or do {
             $self->log->warn("Skipping ".$host->{url}.": ".$@);
             next;
         };
@@ -122,14 +120,26 @@ sub action {
                         $self->log->debug("skipping put $path (noaction mode)");
                         next;
                     }
+                    my $src = $path;
+                    my $fh;
+                    my $filename;
+                    if ($host->{'gunzip'} eq 'yes' and $path =~ /\.gz$/){
+                        ($fh,$filename) = tempfile('logsenderXXXXX',UNLINK=>1,TMPDIR => 1);
+                        gunzip $path,$fh or do {
+                            $self->log->error("gunzip $path failed: $GunzipError");
+                        };
+                        $self->log->debug("gunzip $path to $filename");
+                        $src=$filename;
+                    }
                     $ftp->put($path,File::Spec->catfile($file->{destinationDir},$basename)) or do {
                         $self->log->error("put $path failed: " . $ftp->code() . ": " . $ftp->message());
                         next;
                     };
+                    unlink $filename if $filename;
                     my $end = gettimeofday();
-                    open my $fh,'>',$path.$suffix;
-                    $self->log->debug("$path transfered $size Bytes @ ".sprintf("%.1f MByte/s",$size/($end-$start)/1024/1024));
-                    close $fh;
+                    open my $touch,'>',$path.$suffix;
+                    $self->log->debug("$src transfered $size Bytes @ ".sprintf("%.1f MByte/s",($end-$start)/($size/(1024*1024))));
+                    close $touch;
                 }
             }
         }

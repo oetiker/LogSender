@@ -121,6 +121,10 @@ thus preventing any further transfers of the file.
 DOC_END
                     validator => $string
                 },
+                gunzip => {
+                    description => 'gunzip any file ending in .gz prior to transfer?',
+                    validator => $vf->rx('yes|no','expected yes or no')
+                },
                 FILES => {
                     description => 'a map of globs on the remote machine',
                     array => 1,
@@ -208,6 +212,7 @@ sub loadJSONCfg {
     my $file = shift;
     my $json = slurp($file);
     $json =~ s{^\s*//.*}{}gm;
+
     my $raw_cfg = eval { decode_json($json) };
     if ($@){
         if ($@ =~ /(.+?) at line (\d+), offset (\d+)/){
