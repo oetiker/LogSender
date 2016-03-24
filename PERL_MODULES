@@ -4,3 +4,4 @@ Data::Processor
 IO::Uncompress::Gunzip
 File::Temp
 Test::Mock::Net::FTP
+TAP::Parser

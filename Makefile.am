@@ -33,3 +33,11 @@ install-exec-hook:
 
 test:
 	$(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lib','thirdparty/lib/perl5')" t/*.t
+
+release:
+	./bootstrap
+	git tag v$(PACKAGE_VERSION)
+	git push
+	git push --tags
+	$(MAKE) dist
+	scp $(PACKAGE)-$(PACKAGE_VERSION).tar.gz oepdown@james:public_html/hin
