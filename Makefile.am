@@ -17,10 +17,12 @@ DATE := $(shell date +%Y-%m-%d)
 
 datadir = $(prefix)
 
+README COPYRIGHT : VERSION
+	$(PERL) -i -p -e 's/(#VERSION#|\d+\.\d+.\d+\S+)/$(PACKAGE_VERSION)/g;s/(#YEAR#|20[1-4]\d)/$(YEAR)/g;s/(#DATE#|20[1-9]\d-[01]\d-[0-3]\d)/$(DATE)/g;' $@
+
 dist_bin_SCRIPTS = $(BIN)
 
 dist-hook: thirdparty/CPAN/touch
-	$(PERL) -i -p -e 's/#VERSION#/$(PACKAGE_VERSION)/g;s/#YEAR#/$(YEAR)/g;s/#DATE#/$(DATE)/g;'  $(distdir)/README $(distdir)/COPYRIGHT
 	$(PERL) -i -p -e 's/^our\s+\$$VERSION\s*=\s*".+?";/our \$$VERSION = "$(PACKAGE_VERSION)";/;'  $(distdir)/lib/$(CLASS_NAME).pm
 
 install-exec-hook:

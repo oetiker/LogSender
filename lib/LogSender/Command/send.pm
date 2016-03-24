@@ -37,12 +37,16 @@ copy logfiles to a remote machine via ftp and keep track of what has been transf
 EOF
 
 has usage => <<"EOF";
-usage: $0 fetch [OPTIONS]
+usage: $0 send [OPTIONS]
 
 These options are available:
 
   --verbose   talk about your work
-  --noaction  do not actually write to the rrd files
+  --noaction  ONLY talk do not act
+
+Operations of logsender send are configured in the logsend.cfg file. Use
+the LOGSENDER_CFG environment variable to point to an alternate location
+for this file.
 
 EOF
 

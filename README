@@ -1,7 +1,7 @@
 LogSender
 =========
-Version: #VERSION#
-Date: #DATE#
+Version: 0.1.1
+Date: 2016-03-24
 
 Send files from a set of local directories to one or several remote machines
 via ftp and take care to only send them once.

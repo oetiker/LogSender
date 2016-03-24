@@ -7,12 +7,11 @@ our $VERSION = "0.0.0";
 
 =head1 NAME
 
-AzeOP - the application class
+LogSender - Application Class
 
 =head1 SYNOPSIS
 
- use Mojolicious::Commands;
- Mojolicious::Commands->start_app('LogSender');
+ logsender.pl COMMAND
 
 =head1 DESCRIPTION
 
@@ -44,6 +43,7 @@ has config => sub {
 sub startup {
     my $app = shift;
     @{$app->commands->namespaces} = (__PACKAGE__.'::Command');
+    $app->commands->message("Usage:\n\n".$app->commands->extract_usage."\nCommands:\n\n");
 }
 
 1;
