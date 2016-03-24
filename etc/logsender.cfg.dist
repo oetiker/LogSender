@@ -1,25 +1,25 @@
 {
-	"GENERAL": {
-		"logFile": "/tmp/logsender.log",
-		"logLevel": "debug",
-		"logCheckInterval": 3600,
-		"logCheckPastIntervals": 10,
-		"timeout": 10
-	},
-	"CONSTANTS": {
-		"YM_DIR": "%Y"
-	},
-	"HOSTS": [
-		{
-			"url": "ftp://oetiker:gugus@engelberg",
+    "GENERAL": {
+        "logFile": "/tmp/logsender.log",
+        "logLevel": "debug",
+        "logCheckInterval": 3600,
+        "logCheckPastIntervals": 10,
+        "timeout": 10
+    },
+    "CONSTANTS": {
+        "YM_DIR": "%Y"
+    },
+    "HOSTS": [
+        {
+            "url": "ftp://oetiker:gugus@engelberg",
             "transferSuffix": ".engelberg",
-			"FILES": [
-				{
+            "FILES": [
+                {
                     "destinationDir": "demodir/",
-					"globPattern": "/home/oetiker/scratch/log/${YM_DIR}/message*",
-					"stopFile": "message.2"
-				}
-			]
-		}
-	]
+                    "globPattern": "/home/oetiker/scratch/log/${YM_DIR}/message*",
+                    "stopFile": "message.2"
+                }
+            ]
+        }
+    ]
 }
