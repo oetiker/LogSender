@@ -36,6 +36,7 @@ test:
 
 release:
 	./bootstrap
+	git commit -m 'prep release $(VERSION)' -a
 	git tag v$(PACKAGE_VERSION)
 	git push
 	git push --tags
