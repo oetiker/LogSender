@@ -117,7 +117,6 @@ sub action {
                     next if not -f $path;
                     next if -e $path.$suffix;
                     my $start = gettimeofday();
-                    my $size = -s $path;
                     if ($opt{noaction}){
                         $self->log->debug("skipping put $path (noaction mode)");
                         next;
@@ -143,6 +142,7 @@ sub action {
                         unlink $mark;
                         next;
                     };
+                    my $size = -s $src;
                     unlink $tmpFile if $tmpFile;
                     my $end = gettimeofday();
                     $self->log->debug("$src transfered $size Bytes @ ".sprintf("%.1f MByte/s",($end-$start)/($size/(1024*1024))));
