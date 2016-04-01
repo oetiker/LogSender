@@ -138,7 +138,7 @@ sub action {
                         $self->log->error("aborting transfer of $path - creating $mark failed: $!");
                         next;
                     };
-                    $ftp->put($path,File::Spec->catfile($file->{destinationDir},$basename)) or do {
+                    $ftp->put($src,File::Spec->catfile($file->{destinationDir},$basename)) or do {
                         $self->log->error("aborting transfer of $path: " . $ftp->code() . ": " . $ftp->message());
                         unlink $mark;
                         next;
