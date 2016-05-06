@@ -84,19 +84,6 @@ AC_SUBST(VERSION)
 
 AC_OUTPUT
 
-if test x$mod_ok = x0; then
-    cat <<NOTES
-
-** SOME PERL MODULES ARE MISSING ******************************
-
-If you know where perl can find the missing modules, set
-the PERL5LIB environment variable accordingly. Otherwise
-just proceed and the missing modules will be installed
-automatically.
-NOTES
-
-fi
-
 cat <<NOTES
 
 ** CONFIGURE DONE **********************************************
