@@ -145,7 +145,7 @@ sub action {
                     my $size = -s $src;
                     unlink $tmpFile if $tmpFile;
                     my $end = gettimeofday();
-                    $self->log->debug("$src transfered $size Bytes @ ".sprintf("%.1f MByte/s",($end-$start)/($size/(1024*1024))));
+                    $self->log->debug("$src transfered $size Bytes @ ".sprintf("%.1f MByte/s",($size/(1024*1024))/($end-$start)));
                     close $touch;
                 }
             }
