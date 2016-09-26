@@ -1,4 +1,4 @@
-package LogSender::Command::send;
+ package LogSender::Command::send;
 use Mojo::Base 'Mojolicious::Command';
 use Getopt::Long 2.25 qw(:config posix_default no_ignore_case);
 
@@ -16,7 +16,7 @@ use Time::HiRes qw(gettimeofday);
 use POSIX qw(strftime);
 use File::Spec;
 use IO::Uncompress::Gunzip qw(gunzip $GunzipError);
-use File::Temp qw/tempfile/;
+use File::Temp;
 
 =head1 NAME
 
@@ -123,14 +123,13 @@ sub action {
                     }
                     my $src = $path;
                     my $fh;
-                    my $tmpFile;
                     if ($host->{'gunzip'} eq 'yes' and $basename =~ s/\.gz$//){
-                        ($fh,$tmpFile) = tempfile('logsenderXXXXX',UNLINK=>1,TMPDIR => 1);
+                        $fh = File::Temp->new( TEMPLATE => 'logsenderXXXXX', TMPDIR => 1 );
                         gunzip $path,$fh or do {
                             $self->log->error("gunzip $path failed: $GunzipError");
                         };
-                        $self->log->debug("gunzip $path to $tmpFile");
-                        $src=$tmpFile;
+                        $src=$fh->filename;
+                        $self->log->debug("gunzip $path to $src");
                     }
                     my $mark = $path.$suffix;
                     open my $touch,'>',$mark or do {
@@ -143,10 +142,8 @@ sub action {
                         next;
                     };
                     my $size = -s $src;
-                    unlink $tmpFile if $tmpFile;
                     my $end = gettimeofday();
                     $self->log->debug("$src transfered $size Bytes @ ".sprintf("%.1f MByte/s",($size/(1024*1024))/($end-$start)));
-                    close $touch;
                 }
             }
         }

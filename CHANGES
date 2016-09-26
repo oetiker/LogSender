@@ -1,3 +1,6 @@
+0.2.5 2016-09-23  Tobias Oetiker (tobi@oetiker.ch)
+- properly release filehandles
+
 0.0.0 2016-03-22  Tobias Oetiker (tobi@oetiker.ch)
 
 - started project
