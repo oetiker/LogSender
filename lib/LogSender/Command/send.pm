@@ -111,8 +111,8 @@ sub action {
             for my $pattern (keys %glob){
                 for my $path (glob $pattern){
                     next if $path =~ m/\Q${suffix}\E$/;
-
                     my $basename = basename($path);
+                    next if $file->{skipFile} and strftime($file->{skipFile},localtime(time)) eq $basename;
                     next if $file->{stopFile} and $basename le $file->{stopFile};
                     next if not -f $path;
                     next if -e $path.$suffix;
@@ -143,7 +143,7 @@ sub action {
                     };
                     my $size = -s $src;
                     my $end = gettimeofday();
-                    $self->log->debug("$src transfered $size Bytes @ ".sprintf("%.1f MByte/s",($size/(1024*1024))/($end-$start)));
+                    $self->log->debug("$src transferred $size Bytes @ ".sprintf("%.1f MByte/s",($size/(1024*1024))/($end-$start)));
                 }
             }
         }

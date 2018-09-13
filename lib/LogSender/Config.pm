@@ -139,9 +139,15 @@ DOC_END
                             example => '/var/log/archive/%Y/%m/%d/messages-*.gz',
                             validator => $string
                         },
+                        skipFile => {
+                            description => 'a string to match against the filename. If it matches the file will be skipped. You can use ${CONSTANTS} and strftime placeholders. It operates on localtime.',
+                            example => 'access_log.%Y-%m-%d',
+                            validator => $string,
+                            optional => 1
+                        },
                         stopFile => {
                             optional => 1,
-                            description => 'If defined, no filnename C<le> this one will be considered for transfer.',
+                            description => 'If defined, no filename C<le> this one will be considered for transfer.',
                             validator => $string
                         },
                     }
@@ -187,7 +193,7 @@ has cfgHash => sub {
         my $CONST_MATCH = join('|',keys %$const);
         for my $host (@{$cfg->{HOSTS}}){
             for my $logFile (@{$host->{FILES}}){
-                for my $key (qw(globPattern)){
+                for my $key (qw(globPattern skipFile)){
                     $logFile->{$key} =~ s/\$\{($CONST_MATCH)\}/$const->{$1}/g;
                 }
             }

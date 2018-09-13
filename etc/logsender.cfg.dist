@@ -11,7 +11,8 @@
         "timeout": 10
     },
     "CONSTANTS": {
-        "YM_DIR": "%Y"
+        "YM_DIR": "%Y",
+        "SKIP_IT": "%Y-%m-%d"
     },
     "HOSTS": [
         {
@@ -25,7 +26,8 @@
                 {
                     "destinationDir": "demodir/",
                     "globPattern": "/home/oetiker/scratch/log/${YM_DIR}/message*",
-                    "stopFile": "message.2"
+                    "stopFile": "message.2",
+                    "skipFile": "message.${SKIP_IT}"
                 }
             ]
         }
