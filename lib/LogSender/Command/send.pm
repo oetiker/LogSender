@@ -115,7 +115,10 @@ sub action {
                     next if $file->{skipFile} and strftime($file->{skipFile},localtime(time)) eq $basename;
                     next if $file->{stopFile} and $basename le $file->{stopFile};
                     next if not -f $path;
-                    next if -e $path.$suffix;
+                    # only touch files which have not changed for 10 minutes
+                    next if time - [stat($path)]->[10] < 600;
+                    my $mark = $path.$suffix;
+                    next if -e $mark;
                     my $start = gettimeofday();
                     if ($opt{noaction}){
                         $self->log->debug("skipping put $path (noaction mode)");
@@ -131,7 +134,6 @@ sub action {
                         $src=$fh->filename;
                         $self->log->debug("gunzip $path to $src");
                     }
-                    my $mark = $path.$suffix;
                     open my $touch,'>',$mark or do {
                         $self->log->error("aborting transfer of $path - creating $mark failed: $!");
                         next;

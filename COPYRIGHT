@@ -3,7 +3,7 @@ LogSender
 Use Ftp to send local files to a configurable list of machines and store them remotely
 makeing sure to send each file only once.
 
-Copyright (c) 2016, OETIKER+PARTNER AG
+Copyright (c) 2018, OETIKER+PARTNER AG
 
 All rights reserved.
 

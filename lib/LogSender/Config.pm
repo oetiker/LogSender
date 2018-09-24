@@ -194,6 +194,7 @@ has cfgHash => sub {
         for my $host (@{$cfg->{HOSTS}}){
             for my $logFile (@{$host->{FILES}}){
                 for my $key (qw(globPattern skipFile)){
+                    next unless defined $logFile->{$key};
                     $logFile->{$key} =~ s/\$\{($CONST_MATCH)\}/$const->{$1}/g;
                 }
             }
