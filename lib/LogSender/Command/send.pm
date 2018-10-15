@@ -127,10 +127,12 @@ sub action {
                     my $src = $path;
                     my $fh;
                     if ($host->{'gunzip'} eq 'yes' and $basename =~ s/\.gz$//){
-                        $fh = File::Temp->new( TEMPLATE => 'logsenderXXXXX', TMPDIR => 1 );
+                        ($fh = File::Temp->new( TEMPLATE => 'logsenderXXXXX', TMPDIR => 1 );
                         gunzip $path,$fh or do {
                             $self->log->error("gunzip $path failed: $GunzipError");
                         };
+                        $fh->flush;
+                        $fh->sync;
                         $src=$fh->filename;
                         $self->log->debug("gunzip $path to $src");
                     }
