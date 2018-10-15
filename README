@@ -1,7 +1,7 @@
 LogSender
 =========
 Version: 0.1.1
-Date: 2018-09-18
+Date: 2018-10-15
 
 Send files from a set of local directories to one or several remote machines
 via ftp and take care to only send them once.

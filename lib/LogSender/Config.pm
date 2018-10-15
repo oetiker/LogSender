@@ -2,7 +2,7 @@ package LogSender::Config;
 
 use Mojo::Base -base;
 use Mojo::JSON qw(decode_json);
-use Mojo::Util qw(slurp);
+use Mojo::File;
 use Mojo::Exception;
 use Data::Processor;
 use Data::Processor::ValidatorFactory;
@@ -217,7 +217,7 @@ Load the given config, sending error messages to stdout and igonring /// lines a
 sub loadJSONCfg {
     my $self = shift;
     my $file = shift;
-    my $json = slurp($file);
+    my $json = Mojo::File->new($file)->slurp;
     $json =~ s{^\s*//.*}{}gm;
 
     my $raw_cfg = eval { decode_json($json) };
