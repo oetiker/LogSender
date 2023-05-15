@@ -15,6 +15,7 @@ thirdparty/*
 Build.bat
 .last_cover_stats
 Makefile
+Makefile.in
 Makefile.old
 MANIFEST.bak
 /META.yml
@@ -27,5 +28,11 @@ nytprof.out
 /_eumm/
 public/
 config.*
+configure
 etc/logsender.cfg
+*.xz
+*.sum
+conftools/*
+*output.txt
+distsecret
 *~

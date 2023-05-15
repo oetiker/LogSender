@@ -1,3 +1,9 @@
+0.4.0 2023-05-12 17:43:02 +0200 Tobias Oetiker <tobi@oetiker.ch>
+
+ - allow sftp urls of the form sftp://host[:port]
+   note, this relies on ssh keys already being setup for the user that is running
+   logsender. Put the ssh configuration into ~/.ssh/config
+
 0.2.5 2016-09-23  Tobias Oetiker (tobi@oetiker.ch)
 - properly release filehandles
 

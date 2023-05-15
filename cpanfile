@@ -1,0 +1,9 @@
+requires 'Mojolicious';
+requires 'Getopt::Long';
+requires 'Pod::Usage';
+requires 'Net::FTP';
+requires 'Data::Processor';
+requires 'IO::Uncompress::Gunzip';
+requires 'File::Temp';
+requires 'Test::Mock::Net::FTP';
+requires 'Net::SFTP::Foreign';

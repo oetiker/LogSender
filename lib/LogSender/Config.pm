@@ -63,7 +63,7 @@ has schema => sub {
     my $self = shift;
     my $vf = $self->validatorFactory;
     my $string = $vf->rx('^.*$','expected a string');
-    my $url = $vf->rx('^ftp://[^:]+:[^@]+@.+$','expected ftp url: ftp://user:pass@host');
+    my $url = $vf->rx('^(ftp://[^:]+:[^@]+|sftp://[^\s@:]+(:\d+)?)$','expected [s]ftp url: ftp://user[:pass]@host or sftp://host[:port]');
     my $integer = $vf->rx('^\d+$','expected an integer');
 
     return {
@@ -115,10 +115,7 @@ has schema => sub {
                     validator => $url
                 },
                 transferSuffix => {
-                    description => <<DOC_END,
-When a file has been successfully transfered, the LogSender will touch the filename with the transferSuffix appended
-thus preventing any further transfers of the file.
-DOC_END
+                    description => 'When a file has been successfully transfered, the LogSender will touch the filename with the transferSuffix appended thus preventing any further transfers of the file.',
                     validator => $string
                 },
                 gunzip => {
